@@ -22,3 +22,4 @@ def test_inference_time(model_list):
         for i, model in enumerate(model_list):
             model_name = f"model_{i}"
             f.write('%s,%f\n' % (model_name, inference_times[i]))
+    return inference_times
