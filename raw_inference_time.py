@@ -18,7 +18,6 @@ def test_inference_time(model_list):
 
     # Save the inference times to a CSV file
     with open('inference_times.csv', 'w') as f:
-        f.write('Model,InferenceTime(ms)\n')
         for i, model in enumerate(model_list):
             model_name = f"model_{i}"
             f.write('%s,%f\n' % (model_name, inference_times[i]))

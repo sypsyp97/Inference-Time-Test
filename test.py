@@ -23,6 +23,7 @@ if __name__ == "__main__":
             tpu_files.append(file)
 
     tpu_inference_time = []
+
     with open('tpu_inference_times.csv', mode='w', newline='') as file:
         writer = csv.writer(file)
         writer.writerow(['Model', 'Inference Time (ms)'])
@@ -52,6 +53,7 @@ if __name__ == "__main__":
             tpu_inference_time.append(inference_time * 1000)
 
             with open('tpu_inference_times.csv', mode='w', newline='') as file:
+                writer = csv.writer(file)
                 writer.writerow([model_file, inference_time])
 
         except Exception as e:
