@@ -298,7 +298,7 @@ def create_model(model_array, num_classes=5, input_shape=(256, 256, 3)):
 
 def create_first_population(population=20, num_classes=5):
 
-    list = []
+    model_list = []
     first_population_array = np.random.randint(0, 2, (population, 9, 18))
 
     for i in range(population):
@@ -306,9 +306,9 @@ def create_first_population(population=20, num_classes=5):
         while check_model(model):
             first_population_array[i] = np.random.randint(0, 2, (9, 18))
             model = create_model(first_population_array[i], num_classes=num_classes)
-        list.append(model)
+        model_list.append(model)
 
-    return first_population_array, list
+    return first_population_array, model_list
 
 
 
