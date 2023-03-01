@@ -20,4 +20,5 @@ def test_inference_time(model_list):
     with open('inference_times.csv', 'w') as f:
         f.write('Model,InferenceTime(ms)\n')
         for i, model in enumerate(model_list):
-            f.write('%s,%f\n' % (model.name, inference_times[i]))
+            model_name = f"model_{i}"
+            f.write('%s,%f\n' % (model_name, inference_times[i]))
