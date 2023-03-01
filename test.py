@@ -2,14 +2,13 @@ from reference import create_first_population
 from raw_inference_time import test_inference_time
 from TFLite_Converter import tflite_converter
 from Compile_Edge_TPU import compile_edgetpu
-import argparse
+import csv
+
 import time
 import os
 import numpy as np
 from PIL import Image
-from pycoral.adapters import classify
-from pycoral.adapters import common
-from pycoral.utils.dataset import read_label_file
+
 from pycoral.utils.edgetpu import make_interpreter
 
 if __name__ == "__main__":
@@ -24,32 +23,41 @@ if __name__ == "__main__":
             tpu_files.append(file)
 
     tpu_inference_time = []
+    with open('tpu_inference_times.csv', mode='w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(['Model', 'Inference Time (ms)'])
 
-    for i in range(len(tpu_files)):
-        model_file = f"model_{i}_edgetpu.tflite"
-        interpreter = make_interpreter(model_file)
-        interpreter.allocate_tensors()
+    for model_file in tpu_files:
+        try:
+            interpreter = make_interpreter(model_file)
+            interpreter.allocate_tensors()
 
-        # Get input and output details
-        input_details = interpreter.get_input_details()[0]
-        output_details = interpreter.get_output_details()[0]
+            # Get input and output details
+            input_details = interpreter.get_input_details()[0]
+            output_details = interpreter.get_output_details()[0]
 
-        # Load the input image
-        image_file = 'test.jpg'
-        image = Image.open(image_file).convert('RGB')
-        image = np.array(image.resize((input_details['shape'][1], input_details['shape'][2])))
+            # Load the input image
+            image_file = 'test.jpg'
+            image = Image.open(image_file).convert('RGB')
+            image = np.array(image.resize((input_details['shape'][1], input_details['shape'][2])))
 
-        # Set the input tensor
-        input_tensor = np.expand_dims(image, axis=0).astype(input_details['dtype'])
-        interpreter.set_tensor(input_details['index'], input_tensor)
+            # Set the input tensor
+            input_tensor = np.expand_dims(image, axis=0).astype(input_details['dtype'])
+            interpreter.set_tensor(input_details['index'], input_tensor)
 
-        # Run inference and measure the time taken
-        start_time = time.monotonic()
-        interpreter.invoke()
-        inference_time = time.monotonic() - start_time
-        tpu_inference_time.append(inference_time * 1000)
+            # Run inference and measure the time taken
+            start_time = time.monotonic()
+            interpreter.invoke()
+            inference_time = time.monotonic() - start_time
+            tpu_inference_time.append(inference_time * 1000)
 
-        print('Inference time: {:.2f} ms'.format(inference_time * 1000))
+            with open('tpu_inference_times.csv', mode='w', newline='') as file:
+                writer.writerow([model_file, inference_time])
+
+        except Exception as e:
+            print(e)
+
+
 
 
 
