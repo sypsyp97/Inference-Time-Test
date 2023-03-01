@@ -1,6 +1,7 @@
 import timeit
 import numpy as np
 
+
 def test_inference_time(model_list):
     input_data = np.random.randn(1, 256, 256, 3).astype(np.float32)
 
