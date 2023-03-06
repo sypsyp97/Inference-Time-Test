@@ -45,6 +45,7 @@ if __name__ == "__main__":
             interpreter.invoke()
             tpu_inference_time = (time.monotonic() - start_time) * 1000
             tpu_inference_times.append(tpu_inference_time)
+
             inference_time = test_inference_time(model)
             inference_times.append(inference_time)
             print(f"Model:{i}")
