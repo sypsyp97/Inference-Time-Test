@@ -107,10 +107,7 @@ def inverted_residual_block(x, expansion_factor, output_channels, strides=1, ker
         print(f"{normalization} not found in the list of normalization layers.")
         m = m
 
-    if strides == 1 and residual == 'Concatenate':
-        m = layers.Concatenate(axis=-1)([m, x])
-
-    elif tf.math.equal(x.shape[-1], output_channels) and strides == 1:
+    if tf.math.equal(x.shape[-1], output_channels) and strides == 1:
 
         if residual == 'Concatenate':
             m = layers.Concatenate(axis=-1)([m, x])
