@@ -42,6 +42,7 @@ def process_model(i):
         start_time = time.monotonic()
         interpreter.invoke()
         tpu_inference_time = (time.monotonic() - start_time) * 1000
+        print(inference_time, tpu_inference_time)
         return (inference_time, tpu_inference_time)
     except Exception as e:
         print(e)
