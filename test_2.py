@@ -9,11 +9,6 @@ import matplotlib.pyplot as plt
 import time
 import numpy as np
 from PIL import Image
-
-from pycoral.utils.edgetpu import make_interpreter
-import time
-import numpy as np
-from PIL import Image
 from pycoral.utils.edgetpu import make_interpreter
 from multiprocessing import Pool, cpu_count
 
