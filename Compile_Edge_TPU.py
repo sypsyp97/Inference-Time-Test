@@ -6,10 +6,6 @@ def compile_edgetpu(tflite_model_name):
         print(f"{tflite_model_name} not found")
         return
 
-    if not tflite_model_name.endswith('.tflite'):
-        print(f"{tflite_model_name} is not a TFLite model file")
-        return
-
     edgetpu_model_name = tflite_model_name.replace('.tflite', '_edgetpu.tflite')
     os.system('edgetpu_compiler -sa {}'.format(tflite_model_name))
 
