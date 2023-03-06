@@ -3,10 +3,8 @@ from reference import check_model
 from raw_inference_time import test_inference_time
 from TFLite_Converter import tflite_converter
 from Compile_Edge_TPU import compile_edgetpu
-import csv
 
 import time
-import os
 import numpy as np
 from PIL import Image
 

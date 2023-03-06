@@ -4,7 +4,7 @@ import numpy as np
 
 def representative_dataset_generator():
     for i in range(100):
-        yield [np.array(np.random.uniform(0.0, 1.0, (1, 256, 256, 1)), dtype=np.float32)]
+        yield [np.array(np.random.uniform(0.0, 1.0, (1, 256, 256, 3)), dtype=np.float32)]
 
 
 def tflite_converter(model, i):
@@ -16,6 +16,8 @@ def tflite_converter(model, i):
     converter.representative_dataset = representative_dataset_generator
 
     converter.target_spec.supported_types = [tf.int8]
+    converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS_INT8,
+                                           tf.lite.OpsSet.SELECT_TF_OPS]
 
     converter.inference_input_type = tf.uint8
     converter.inference_output_type = tf.uint8
