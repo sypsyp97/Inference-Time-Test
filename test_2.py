@@ -51,7 +51,7 @@ if __name__ == '__main__':
     inference_times = []
     tpu_inference_times = []
 
-    with Pool(cpu_count()) as p:
+    with Pool(10) as p:
         results = p.map(process_model, range(500))
 
     for r in results:
