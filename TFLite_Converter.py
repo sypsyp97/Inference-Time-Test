@@ -2,10 +2,9 @@ import tensorflow as tf
 import numpy as np
 
 
-def representative_data_gen():
-    for _ in range(100):
-        data = np.random.rand(1, 256, 256, 1)
-        yield [data.astype(np.float32)]
+def representative_dataset_generator():
+    for i in range(100):
+        yield [np.array(np.random.uniform(0.0, 1.0, (1, 256, 256, 1)), dtype=np.float32)]
 
 
 def tflite_converter(model, i):
@@ -14,7 +13,7 @@ def tflite_converter(model, i):
 
     converter.optimizations = [tf.lite.Optimize.DEFAULT]
 
-    converter.representative_dataset = representative_data_gen
+    converter.representative_dataset = representative_dataset_generator
 
     converter.target_spec.supported_types = [tf.int8]
 
