@@ -3,6 +3,8 @@ from reference import check_model
 from raw_inference_time import test_inference_time
 from TFLite_Converter import tflite_converter
 from Compile_Edge_TPU import compile_edgetpu
+import pickle
+import matplotlib.pyplot as plt
 
 import time
 import numpy as np
@@ -15,7 +17,7 @@ if __name__ == "__main__":
     inference_times = []
     tpu_inference_times = []
 
-    for i in range(1):
+    for i in range(500):
         try:
             model_array = np.random.randint(0, 2, (9, 18))
             model = create_model(model_array=model_array, num_classes=5, input_shape=(256, 256, 3))
@@ -48,6 +50,37 @@ if __name__ == "__main__":
             tpu_inference_times.append(tpu_inference_time)
         except Exception as e:
             print(e)
+
+    print(inference_times)
+    print(tpu_inference_times)
+
+    with open('inference_times.pkl', 'wb') as f:
+        pickle.dump(inference_times, f)
+
+    with open('tpu_inference_times.pkl', 'wb') as f:
+        pickle.dump(tpu_inference_times, f)
+
+    with open('inference_times.pkl', 'rb') as f:
+        inference_times = pickle.load(f)
+
+    with open('tpu_inference_times.pkl', 'rb') as f:
+        tpu_inference_times = pickle.load(f)
+
+    plt.plot(inference_times, tpu_inference_times)
+
+    # Adding title and labels to the plot
+    plt.title('Inference Times vs TPU Inference Times')
+    plt.xlabel('Inference Time (seconds)')
+    plt.ylabel('TPU Inference Time (seconds)')
+
+    # Displaying the plot
+    plt.show()
+
+
+
+
+
+
 
 
 

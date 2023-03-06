@@ -6,6 +6,8 @@ chest_xray_new
 __pycache__/
 *.py[cod]
 *$py.class
+*.tflite
+*.log
 
 # C extensions
 *.so
