@@ -1,12 +1,17 @@
 import os
-import fnmatch
 
 
-def compile_edgetpu():
-    tflite_files = []
-    for file in os.listdir('.'):
-        if fnmatch.fnmatch(file, '*.tflite'):
-            tflite_files.append(file)
+def compile_edgetpu(tflite_model_name):
+    if not os.path.exists(tflite_model_name):
+        print(f"{tflite_model_name} not found")
+        return
 
-    for model_file in tflite_files:
-        os.system('edgetpu_compiler {}'.format(model_file))
+    if not tflite_model_name.endswith('.tflite'):
+        print(f"{tflite_model_name} is not a TFLite model file")
+        return
+
+    edgetpu_model_name = tflite_model_name.replace('.tflite', '_edgetpu.tflite')
+    os.system(f'edgetpu_compiler {tflite_model_name} -o {edgetpu_model_name}')
+
+    return edgetpu_model_name
+
