@@ -21,8 +21,6 @@ def process_model(i):
             model_array = np.random.randint(0, 2, (9, 18))
             model = create_model(model_array=model_array, num_classes=5, input_shape=(256, 256, 3))
 
-        print(f"Generation:{i}")
-        inference_time = test_inference_time(model)
         tflite_model_name = tflite_converter(model, i)
         edgetpu_model_name = compile_edgetpu(tflite_model_name)
 
@@ -42,6 +40,8 @@ def process_model(i):
         start_time = time.monotonic()
         interpreter.invoke()
         tpu_inference_time = (time.monotonic() - start_time) * 1000
+        inference_time = test_inference_time(model)
+        print(f"Model:{i}")
         print(inference_time, tpu_inference_time)
         return (inference_time, tpu_inference_time)
     except Exception as e:

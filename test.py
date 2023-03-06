@@ -17,7 +17,7 @@ if __name__ == "__main__":
     inference_times = []
     tpu_inference_times = []
 
-    for i in range(500):
+    for i in range(1):
         try:
             model_array = np.random.randint(0, 2, (9, 18))
             model = create_model(model_array=model_array, num_classes=5, input_shape=(256, 256, 3))
