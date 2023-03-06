@@ -65,7 +65,8 @@ def conv_block(x, filters=16, kernel_size=3, strides=2, normalization='BatchNorm
 
 def inverted_residual_block(x, expansion_factor, output_channels, strides=1, kernel_size=3,
                             normalization='BatchNormalization', activation='silu6', residual='Concatenate'):
-    m = layers.Conv2D(expansion_factor * output_channels, 1, padding="same")(x)
+
+    m = layers.Conv2D(filters=expansion_factor * output_channels, kernel_size=1, padding="same")(x)
     try:
         normalization_layer = {'BatchNormalization': layers.BatchNormalization(epsilon=1e-6),
                                'LayerNormalization': layers.LayerNormalization(epsilon=1e-6)}[normalization]
@@ -107,7 +108,10 @@ def inverted_residual_block(x, expansion_factor, output_channels, strides=1, ker
         print(f"{normalization} not found in the list of normalization layers.")
         m = m
 
-    if tf.math.equal(x.shape[-1], output_channels) and strides == 1:
+    if strides == 1 and residual == 'Concatenate':
+        m = layers.Concatenate(axis=-1)([m, x])
+
+    elif tf.math.equal(x.shape[-1], output_channels) and strides == 1:
 
         if residual == 'Concatenate':
             m = layers.Concatenate(axis=-1)([m, x])

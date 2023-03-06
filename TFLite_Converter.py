@@ -25,6 +25,7 @@ def tflite_converter(model, i):
     converter.experimental_new_quantizer = True
 
     tflite_model = converter.convert()
+    tf.lite.experimental.Analyzer.analyze(model_content=tflite_model, gpu_compatibility=True)
     tflite_model_name = f"model_{i}.tflite"
 
     with open(tflite_model_name, 'wb') as f:
