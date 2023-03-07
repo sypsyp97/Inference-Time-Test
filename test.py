@@ -52,6 +52,10 @@ if __name__ == "__main__":
             print(inference_time, tpu_inference_time)
         except Exception as e:
             print(e)
+        finally:
+            del model
+            del interpreter
+            del input_tensor
 
     print(inference_times)
     print(tpu_inference_times)
