@@ -59,10 +59,6 @@ if __name__ == "__main__":
             print(e)
         finally:
             del model
-            if interpreter is not None:
-                del interpreter
-            if input_tensor is not None:
-                del input_tensor
 
     print(inference_times)
     print(tpu_inference_times)
