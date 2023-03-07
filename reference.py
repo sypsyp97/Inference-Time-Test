@@ -6,15 +6,15 @@ import numpy as np
 
 
 layer_type_space = ['conv_block', 'inverted_residual_block', 'mobilevit_block', 'None']
-kernel_size_space = [1, 2, 3, 4]
+kernel_size_space = [1, 1, 3, 3]
 stride_space = [1, 2]
 filters_space = [8, 12, 16, 24, 32, 48, 64, 96]
 expansion_factor_space = [1, 2]
 residual_space = ['Add', 'Add', 'Add', 'Add']
 normalization_space = ['BatchNormalization', 'LayerNormalization']
 activation_space = ['relu', 'relu', 'relu', 'relu']
-transformer_space = [1, 2, 3, 4]
-head_space = [1, 2, 3, 4]
+transformer_space = [1, 2, 2, 3]
+head_space = [1, 2, 2, 3]
 
 
 def check_model(model):
