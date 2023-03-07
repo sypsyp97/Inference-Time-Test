@@ -17,7 +17,9 @@ if __name__ == "__main__":
     inference_times = []
     tpu_inference_times = []
 
-    for i in range(100):
+    interpreter = None
+
+    for i in range(10):
         try:
             model_array = np.random.randint(0, 2, (9, 18))
             model = create_model(model_array=model_array, num_classes=5, input_shape=(256, 256, 3))
@@ -28,10 +30,14 @@ if __name__ == "__main__":
             tflite_model_name = tflite_converter(model, i)
             edgetpu_model_name = compile_edgetpu(tflite_model_name)
 
+            if interpreter is not None:
+                del interpreter
+
             interpreter = make_interpreter(edgetpu_model_name)
             interpreter.allocate_tensors()
 
             input_details = interpreter.get_input_details()[0]
+            output_details = interpreter.get_output_details()[0]
 
             image_file = 'test.jpg'
             image = Image.open(image_file).convert('RGB')
@@ -53,13 +59,10 @@ if __name__ == "__main__":
             print(e)
         finally:
             del model
-            del model_array
-            del interpreter
-            del input_tensor
-            del input_details
-            del image
-            del tpu_inference_time
-            del inference_time
+            if interpreter is not None:
+                del interpreter
+            if input_tensor is not None:
+                del input_tensor
 
     print(inference_times)
     print(tpu_inference_times)
