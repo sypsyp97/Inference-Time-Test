@@ -32,22 +32,22 @@ if __name__ == "__main__":
             tflite_model_name = tflite_converter(model, i)
             edgetpu_model_name = compile_edgetpu(tflite_model_name)
 
-            with make_interpreter(edgetpu_model_name) as interpreter:
-                interpreter.allocate_tensors()
-                input_details = interpreter.get_input_details()[0]
+            interpreter = make_interpreter(edgetpu_model_name)
+            interpreter.allocate_tensors()
+            input_details = interpreter.get_input_details()[0]
 
-                input_tensor = np.expand_dims(image, axis=0).astype(input_details['dtype'])
-                interpreter.set_tensor(input_details['index'], input_tensor)
+            input_tensor = np.expand_dims(image, axis=0).astype(input_details['dtype'])
+            interpreter.set_tensor(input_details['index'], input_tensor)
 
-                start_time = time.monotonic()
-                interpreter.invoke()
-                tpu_inference_time = (time.monotonic() - start_time) * 1000
-                tpu_inference_times.append(tpu_inference_time)
+            start_time = time.monotonic()
+            interpreter.invoke()
+            tpu_inference_time = (time.monotonic() - start_time) * 1000
+            tpu_inference_times.append(tpu_inference_time)
 
-                inference_time = test_inference_time(model)
-                inference_times.append(inference_time)
-                print(f"Model:{i}")
-                print(inference_time, tpu_inference_time)
+            inference_time = test_inference_time(model)
+            inference_times.append(inference_time)
+            print(f"Model:{i}")
+            print(inference_time, tpu_inference_time)
 
             del model
             del model_array
