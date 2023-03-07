@@ -30,9 +30,6 @@ if __name__ == "__main__":
             tflite_model_name = tflite_converter(model, i)
             edgetpu_model_name = compile_edgetpu(tflite_model_name)
 
-            if interpreter is not None:
-                del interpreter
-
             interpreter = make_interpreter(edgetpu_model_name)
             interpreter.allocate_tensors()
 
