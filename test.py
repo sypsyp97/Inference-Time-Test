@@ -70,15 +70,15 @@ if __name__ == "__main__":
     with open('tpu_inference_times.pkl', 'rb') as f:
         tpu_inference_times = pickle.load(f)
 
-    plt.plot(inference_times, tpu_inference_times)
+    with plt.style.context('seaborn-whitegrid'):
+        fig, ax = plt.subplots()
+        ax.scatter(inference_times, tpu_inference_times, alpha=0.5)
+        ax.set_title('Inference Times vs TPU Inference Times')
+        ax.set_xlabel('Inference Time (seconds)')
+        ax.set_ylabel('TPU Inference Time (seconds)')
 
-    # Adding title and labels to the plot
-    plt.title('Inference Times vs TPU Inference Times')
-    plt.xlabel('Inference Time (seconds)')
-    plt.ylabel('TPU Inference Time (seconds)')
-
-    # Displaying the plot
-    plt.show()
+        # Displaying the plot
+        plt.show()
 
 
 
