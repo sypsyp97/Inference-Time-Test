@@ -4,7 +4,7 @@ from raw_inference_time import test_inference_time
 from TFLite_Converter import tflite_converter
 from Compile_Edge_TPU import compile_edgetpu
 import pickle
-import matplotlib.pyplot as plt
+
 
 import time
 import numpy as np
@@ -66,20 +66,13 @@ if __name__ == "__main__":
         except Exception as e:
             print(e)
 
-    print(inference_times)
-    print(tpu_inference_times)
-
-    with open('inference_times.pkl', 'wb') as f:
-        pickle.dump(inference_times, f)
-
-    with open('tpu_inference_times.pkl', 'wb') as f:
-        pickle.dump(tpu_inference_times, f)
-
-    with open('inference_times.pkl', 'rb') as f:
-        inference_times = pickle.load(f)
-
-    with open('tpu_inference_times.pkl', 'rb') as f:
-        tpu_inference_times = pickle.load(f)
+        finally:
+            print(inference_times)
+            print(tpu_inference_times)
+            with open('inference_times.pkl', 'wb') as f:
+                pickle.dump(inference_times, f)
+            with open('tpu_inference_times.pkl', 'wb') as f:
+                pickle.dump(tpu_inference_times, f)
 
 
 
