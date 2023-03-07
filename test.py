@@ -52,6 +52,7 @@ if __name__ == "__main__":
             tpu_inference_time = (time.monotonic() - start_time) * 1000
             tpu_inference_times.append(tpu_inference_time)
             del interpreter
+            del start_time
 
             inference_time = test_inference_time(model)
             del model
@@ -61,11 +62,6 @@ if __name__ == "__main__":
 
             del tpu_inference_time
             del inference_time
-
-
-
-
-            del start_time
 
         except Exception as e:
             print(e)
