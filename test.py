@@ -17,7 +17,9 @@ if __name__ == "__main__":
     inference_times = []
     tpu_inference_times = []
 
-    interpreter = None
+    image_file = 'test.jpg'
+    image = Image.open(image_file).convert('RGB')
+    image = np.array(image)
 
     for i in range(10):
         try:
@@ -35,10 +37,6 @@ if __name__ == "__main__":
 
             input_details = interpreter.get_input_details()[0]
             output_details = interpreter.get_output_details()[0]
-
-            image_file = 'test.jpg'
-            image = Image.open(image_file).convert('RGB')
-            image = np.array(image.resize((input_details['shape'][1], input_details['shape'][2])))
 
             input_tensor = np.expand_dims(image, axis=0).astype(input_details['dtype'])
             interpreter.set_tensor(input_details['index'], input_tensor)
