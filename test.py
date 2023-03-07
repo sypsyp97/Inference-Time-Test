@@ -29,16 +29,25 @@ if __name__ == "__main__":
                 model_array = np.random.randint(0, 2, (9, 18))
                 model = create_model(model_array=model_array, num_classes=5, input_shape=(256, 256, 3))
 
+            del model_array
+
             tflite_model_name = tflite_converter(model, i)
             edgetpu_model_name = compile_edgetpu(tflite_model_name)
 
+            del tflite_model_name
+
             interpreter = make_interpreter(edgetpu_model_name)
+            del edgetpu_model_name
+
             interpreter.allocate_tensors()
 
             input_details = interpreter.get_input_details()[0]
 
             input_tensor = np.expand_dims(image, axis=0).astype(input_details['dtype'])
             interpreter.set_tensor(input_details['index'], input_tensor)
+
+            del input_details
+            del input_tensor
 
             start_time = time.monotonic()
             interpreter.invoke()
@@ -51,14 +60,9 @@ if __name__ == "__main__":
             print(inference_time, tpu_inference_time)
 
             del interpreter
-            del input_details
-            del input_tensor
             del tpu_inference_time
             del inference_time
             del model
-            del model_array
-            del tflite_model_name
-            del edgetpu_model_name
             del start_time
 
         except Exception as e:
