@@ -55,13 +55,14 @@ if __name__ == "__main__":
             del input_tensor
             del tpu_inference_time
             del inference_time
+            del model
+            del model_array
+            del tflite_model_name
+            del edgetpu_model_name
+            del start_time
 
         except Exception as e:
             print(e)
-
-        finally:
-            del model
-            del model_array
 
     print(inference_times)
     print(tpu_inference_times)
@@ -78,15 +79,6 @@ if __name__ == "__main__":
     with open('tpu_inference_times.pkl', 'rb') as f:
         tpu_inference_times = pickle.load(f)
 
-    with plt.style.context('seaborn-whitegrid'):
-        fig, ax = plt.subplots()
-        ax.scatter(inference_times, tpu_inference_times, alpha=0.5)
-        ax.set_title('Inference Times vs TPU Inference Times')
-        ax.set_xlabel('Inference Time (seconds)')
-        ax.set_ylabel('TPU Inference Time (seconds)')
-
-        # Displaying the plot
-        plt.show()
 
 
 
