@@ -21,7 +21,7 @@ if __name__ == "__main__":
     image = Image.open(image_file).convert('RGB')
     image = np.array(image)
 
-    for i in range(500):
+    for i in range(300):
         try:
             model_array = np.random.randint(0, 2, (9, 18))
             model = create_model(model_array=model_array, num_classes=5, input_shape=(256, 256, 3))
