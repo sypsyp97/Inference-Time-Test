@@ -1,21 +1,29 @@
-from reference import create_model
-from reference import check_model
-from raw_inference_time import test_inference_time
-from TFLite_Converter import tflite_converter
-from Compile_Edge_TPU import compile_edgetpu
+import gc
+import os
 import pickle
-
-
 import time
+import psutil
+from random import randint
+
 import numpy as np
 from PIL import Image
-
 from pycoral.utils.edgetpu import make_interpreter
+
+from TFLite_Converter import tflite_converter
+from Compile_Edge_TPU import compile_edgetpu
+from raw_inference_time import test_inference_time
+from reference import create_model, check_model
+
+
+def get_memory_usage():
+    process = psutil.Process(os.getpid())
+    return process.memory_info().rss
 
 
 if __name__ == "__main__":
     inference_times = []
     tpu_inference_times = []
+    gc_threshold = 24 * 1024 ** 3
 
     image_file = 'test.jpg'
     image = Image.open(image_file).convert('RGB')
@@ -63,6 +71,10 @@ if __name__ == "__main__":
             del tpu_inference_time
             del inference_time
 
+            if get_memory_usage() > gc_threshold:
+                gc.collect()
+                print("Memory cleared")
+
         except Exception as e:
             print(e)
 
@@ -73,17 +85,3 @@ if __name__ == "__main__":
                 pickle.dump(inference_times, f)
             with open('tpu_inference_times.pkl', 'wb') as f:
                 pickle.dump(tpu_inference_times, f)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
