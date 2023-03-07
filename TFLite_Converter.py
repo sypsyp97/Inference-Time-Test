@@ -16,8 +16,8 @@ def tflite_converter(model, i):
     converter.representative_dataset = representative_dataset_generator
 
     converter.target_spec.supported_types = [tf.int8]
-    converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS_INT8,
-                                           tf.lite.OpsSet.SELECT_TF_OPS]
+    # converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS_INT8,
+    #                                        tf.lite.OpsSet.SELECT_TF_OPS]
 
     converter.inference_input_type = tf.uint8
     converter.inference_output_type = tf.uint8
