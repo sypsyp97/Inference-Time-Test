@@ -59,7 +59,7 @@ def inference(model_index):
 if __name__ == "__main__":
     pool = Pool(processes=8)
 
-    num_models = 500
+    num_models = 24
     results = pool.map(inference, range(num_models))
     inference_times, tpu_inference_times = zip(*results)
     inference_times = [x for x in inference_times if x is not None]
