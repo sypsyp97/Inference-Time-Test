@@ -17,7 +17,7 @@ if __name__ == "__main__":
     inference_times = []
     tpu_inference_times = []
 
-    for i in range(1):
+    for i in range(100):
         try:
             model_array = np.random.randint(0, 2, (9, 18))
             model = create_model(model_array=model_array, num_classes=5, input_shape=(256, 256, 3))
@@ -32,7 +32,6 @@ if __name__ == "__main__":
             interpreter.allocate_tensors()
 
             input_details = interpreter.get_input_details()[0]
-            output_details = interpreter.get_output_details()[0]
 
             image_file = 'test.jpg'
             image = Image.open(image_file).convert('RGB')
@@ -54,8 +53,13 @@ if __name__ == "__main__":
             print(e)
         finally:
             del model
+            del model_array
             del interpreter
             del input_tensor
+            del input_details
+            del image
+            del tpu_inference_time
+            del inference_time
 
     print(inference_times)
     print(tpu_inference_times)
