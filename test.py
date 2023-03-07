@@ -21,6 +21,7 @@ def get_memory_usage():
 
 
 if __name__ == "__main__":
+    gc.enable()
     inference_times = []
     tpu_inference_times = []
     gc_threshold = 24 * 1024 ** 3
