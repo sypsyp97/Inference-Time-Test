@@ -12,7 +12,7 @@ filters_space = [8, 12, 16, 24, 32, 48, 64, 96]
 expansion_factor_space = [1, 2]
 residual_space = ['None', 'Add', 'StochasticDepth', 'Concatenate']
 normalization_space = ['BatchNormalization', 'LayerNormalization']
-activation_space = ['relu', 'relu6', 'silu', 'silu6']
+activation_space = ['relu', 'relu6', 'silu', 'silu']
 transformer_space = [1, 2, 3, 4]
 head_space = [1, 2, 3, 4]
 
