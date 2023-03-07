@@ -36,7 +36,6 @@ if __name__ == "__main__":
             interpreter.allocate_tensors()
 
             input_details = interpreter.get_input_details()[0]
-            output_details = interpreter.get_output_details()[0]
 
             input_tensor = np.expand_dims(image, axis=0).astype(input_details['dtype'])
             interpreter.set_tensor(input_details['index'], input_tensor)
@@ -50,10 +49,19 @@ if __name__ == "__main__":
             inference_times.append(inference_time)
             print(f"Model:{i}")
             print(inference_time, tpu_inference_time)
+
+            del interpreter
+            del input_details
+            del input_tensor
+            del tpu_inference_time
+            del inference_time
+
         except Exception as e:
             print(e)
+
         finally:
             del model
+            del model_array
 
     print(inference_times)
     print(tpu_inference_times)
