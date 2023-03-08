@@ -3,7 +3,6 @@ import os
 import pickle
 import time
 import psutil
-from random import randint
 
 import numpy as np
 from PIL import Image
