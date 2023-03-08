@@ -1,5 +1,7 @@
 # Byte-compiled / optimized / DLL files
 checkpoints
+models
+
 results
 chest_xray_new
 .idea
