@@ -27,7 +27,7 @@ def tflite_converter(model, i):
     converter.experimental_new_quantizer = True
 
     tflite_model = converter.convert()
-    tflite_model_name = f"model_{i}.tflite"
+    tflite_model_name = f"models/model_{i}.tflite"
 
     with open(tflite_model_name, 'wb') as f:
         f.write(tflite_model)
