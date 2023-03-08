@@ -2,11 +2,21 @@ import matplotlib.pyplot as plt
 import pickle
 
 
-with open('results/inference_times_0.pkl', 'rb') as f:
+with open('results/inference_times.pkl', 'rb') as f:
     inference_times = pickle.load(f)
 
-with open('results/tpu_inference_times_0.pkl', 'rb') as f:
+with open('results/tpu_inference_times.pkl', 'rb') as f:
     tpu_inference_times = pickle.load(f)
+
+with open('results/inference_times_0.pkl', 'rb') as f:
+    inference_times_0 = pickle.load(f)
+
+with open('results/tpu_inference_times_0.pkl', 'rb') as f:
+    tpu_inference_times_0 = pickle.load(f)
+
+inference_times = inference_times + inference_times_0
+tpu_inference_times = tpu_inference_times + tpu_inference_times_0
+
 
 with plt.style.context('seaborn-whitegrid'):
     fig, ax = plt.subplots()
