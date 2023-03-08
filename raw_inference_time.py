@@ -1,10 +1,10 @@
 import timeit
 import numpy as np
 
+input_data = np.random.randn(1, 256, 256, 3).astype(np.float32)
+
 
 def test_inference_time(model):
-
-    input_data = np.random.randn(1, 256, 256, 3).astype(np.float32)
     start_time = timeit.default_timer()
     _ = model.predict(input_data)
     end_time = timeit.default_timer()
