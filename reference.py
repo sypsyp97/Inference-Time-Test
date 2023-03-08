@@ -2,7 +2,6 @@ from tensorflow import keras
 from keras import layers
 import tensorflow_addons as tfa
 import tensorflow as tf
-import numpy as np
 
 
 layer_type_space = ['conv_block', 'inverted_residual_block', 'mobilevit_block', 'None']
