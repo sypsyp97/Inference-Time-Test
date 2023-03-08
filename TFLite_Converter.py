@@ -32,4 +32,7 @@ def tflite_converter(model, i):
     with open(tflite_model_name, 'wb') as f:
         f.write(tflite_model)
 
+    del converter
+    del tflite_model
+
     return tflite_model_name
