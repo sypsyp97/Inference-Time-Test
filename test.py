@@ -80,7 +80,7 @@ if __name__ == "__main__":
         finally:
             print(inference_times)
             print(tpu_inference_times)
-            with open('inference_times.pkl', 'wb') as f:
+            with open('results/inference_times.pkl', 'wb') as f:
                 pickle.dump(inference_times, f)
-            with open('tpu_inference_times.pkl', 'wb') as f:
+            with open('results/tpu_inference_times.pkl', 'wb') as f:
                 pickle.dump(tpu_inference_times, f)

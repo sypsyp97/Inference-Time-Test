@@ -68,16 +68,16 @@ if __name__ == "__main__":
     print(inference_times)
     print(tpu_inference_times)
 
-    with open('inference_times.pkl', 'wb') as f:
+    with open('results/inference_times.pkl', 'wb') as f:
         pickle.dump(inference_times, f)
 
-    with open('tpu_inference_times.pkl', 'wb') as f:
+    with open('results/tpu_inference_times.pkl', 'wb') as f:
         pickle.dump(tpu_inference_times, f)
 
-    with open('inference_times.pkl', 'rb') as f:
+    with open('results/inference_times.pkl', 'rb') as f:
         inference_times = pickle.load(f)
 
-    with open('tpu_inference_times.pkl', 'rb') as f:
+    with open('results/tpu_inference_times.pkl', 'rb') as f:
         tpu_inference_times = pickle.load(f)
 
     plt.plot(inference_times, tpu_inference_times)

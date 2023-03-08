@@ -2,10 +2,10 @@ import matplotlib.pyplot as plt
 import pickle
 
 
-with open('inference_times.pkl', 'rb') as f:
+with open('results/inference_times.pkl', 'rb') as f:
     inference_times = pickle.load(f)
 
-with open('tpu_inference_times.pkl', 'rb') as f:
+with open('results/tpu_inference_times.pkl', 'rb') as f:
     tpu_inference_times = pickle.load(f)
 
 with plt.style.context('seaborn-whitegrid'):
